@@ -1,6 +1,9 @@
 from PIL import Image
 import matplotlib.pyplot as plt
 
+# Log images
+def log_input_image(x, opts):
+    return tensor2im(x)
 
 def tensor2im(var):
     var = var.cpu().detach().transpose(0, 2).transpose(0, 1).numpy()
@@ -34,6 +37,16 @@ def vis_faces_with_id(hooks_dict, fig, gs, i):
     fig.add_subplot(gs[i, 2])
     plt.imshow(hooks_dict['output_face'])
     plt.title('Output\n Target Sim={:.2f}'.format(float(hooks_dict['diff_target'])))
+
+def vis_faces_no_id(hooks_dict, fig, gs, i):
+    plt.imshow(hooks_dict['input_face'], cmap="gray")
+    plt.title('Input')
+    fig.add_subplot(gs[i, 1])
+    plt.imshow(hooks_dict['target_face'])
+    plt.title('Target')
+    fig.add_subplot(gs[i, 2])
+    plt.imshow(hooks_dict['output_face'])
+    plt.title('Output')
 
 
 def vis_faces_iterative(hooks_dict, fig, gs, i):
